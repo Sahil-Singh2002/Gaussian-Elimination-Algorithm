@@ -27,8 +27,7 @@ def swap_rows(A,i,j):
     B = A.copy()
     B[[i,j]] = B[[j,i]]  
     return B
-    
-    
+ 
 def swap_cols(A,i,j):
     # Your code here
     if i < 0 or i >= A.shape[1]:
@@ -39,8 +38,19 @@ def swap_cols(A,i,j):
     B[:,[i,j]] = B[:,[j,i]]  
     return B
 
+def add_row(A,i,j,a):
+    if i < 0 or i >= A.shape[0]:
+        raise IndexError(f"Index i={i} out of bounds!")
+    if j < 0 or j >= A.shape[0]:
+        raise IndexError(f"Index i={j} out of bounds!")
+    B = A.copy()
+    B[i] = A[i] + a*A[j]
+    return B
+
 def Gauss_elimination(A):
-    
+    if A.dtype  != 'float64':
+            raise TypeError("Need a matrix with float64 entries!")
+        #raises type error if data type is wrong
     for j in range(min(A.shape)-1):
         max_value= find_max_column_value(A,j+1,j)
         #will find the greatest value in coloumn j
@@ -55,9 +65,4 @@ def Gauss_elimination(A):
         #basicaly makes each element under the diagonal = to 0    
             if abs(A[i,j])< min(A.shape)*np.finfo('float32').eps:
                 A[i,j] == 0 
-        #makes the result nice to look at.
-        if A.dtype !='float64':
-            raise TypeError
-        #raises type error if data type is wrong
     return A
-            
